@@ -11,7 +11,6 @@ class OSRepositoryImpl(
 ) : OSRepository {
 
     override suspend fun isInstalled(): Boolean = withContext(dispatcher) {
-        // Version will throw error if claude code is not installed
         val isInstalled = promptSender.sendAndGetTermination("--version")
 
         return@withContext isInstalled

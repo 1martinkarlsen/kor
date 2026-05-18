@@ -14,9 +14,7 @@ class LaunchTerminalAndWaitForAuthUseCase(
 
     suspend operator fun invoke(): Boolean {
         osRepository.launchTerminal()
-        val loggedIn = waitForLogin()
-
-        return loggedIn
+        return waitForLogin()
     }
 
     private suspend fun waitForLogin(): Boolean {

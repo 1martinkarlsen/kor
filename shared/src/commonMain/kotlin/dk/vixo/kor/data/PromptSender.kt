@@ -3,7 +3,7 @@ package dk.vixo.kor.data
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-private const val PROMPT_TIMEOUT = 5L
+private const val PROMPT_TIMEOUT = 30L
 
 class PromptSender {
 

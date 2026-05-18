@@ -9,6 +9,7 @@ import com.arkivanov.decompose.value.Value
 import dk.vixo.kor.domain.AuthRepository
 import dk.vixo.kor.domain.OSRepository
 import dk.vixo.kor.domain.usecase.LaunchTerminalAndWaitForAuthUseCase
+import dk.vixo.kor.ui.home.HomeComponent
 import dk.vixo.kor.ui.loading.LoadingComponent
 import dk.vixo.kor.ui.login.LoginComponent
 import kotlinx.serialization.Serializable
@@ -56,12 +57,14 @@ class RootComponent(
                     componentContext = componentContext
                 )
             )
-            is Config.Home -> Component.Home
+            is Config.Home -> Component.Home(
+                component = HomeComponent(componentContext = componentContext)
+            )
         }
 
     sealed class Component {
         class Loading(val component: LoadingComponent) : Component()
-        object Home : Component()
+        class Home(val component: HomeComponent) : Component()
         class Login(val component: LoginComponent) : Component()
     }
 

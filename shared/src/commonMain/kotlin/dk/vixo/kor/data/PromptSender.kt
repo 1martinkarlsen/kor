@@ -7,9 +7,8 @@ private const val PROMPT_TIMEOUT = 5L
 
 class PromptSender {
 
-    val processBuilder = ProcessBuilder()
-
-    suspend fun runCommand(vararg args: String): Boolean = try {
+    fun runCommand(vararg args: String): Boolean = try {
+        val processBuilder = ProcessBuilder()
         val process = processBuilder.command(*args)
             .redirectErrorStream(true)
             .start()
@@ -24,7 +23,8 @@ class PromptSender {
         return false
     }
 
-    suspend fun sendAndGetTermination(vararg args: String): Boolean = try {
+    fun sendAndGetTermination(vararg args: String): Boolean = try {
+        val processBuilder = ProcessBuilder()
         val process = processBuilder.command("claude", *args)
             .redirectErrorStream(true)
             .start()
@@ -39,7 +39,8 @@ class PromptSender {
         return false
     }
 
-    suspend fun send(prompt: String): String? {
+    fun send(prompt: String): String? {
+        val processBuilder = ProcessBuilder()
         val process = processBuilder.command("claude", "-p", prompt, "--output-format", "json")
             .redirectErrorStream(false)
             .start()

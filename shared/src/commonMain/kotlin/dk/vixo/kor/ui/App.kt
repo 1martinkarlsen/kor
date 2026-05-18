@@ -18,11 +18,11 @@ fun App(
         animation = stackAnimation(fade())
     ) {
         when (val instance = it.instance) {
-            is Component.Loading -> {
+            is RootComponent.Component.Loading -> {
                 LoadingIndicator()
             }
-            is Component.Login -> LoginScreen(component = instance.component)
-            is Component.Home -> {
+            is RootComponent.Component.Login -> LoginScreen(component = instance.component)
+            is RootComponent.Component.Home -> {
                 Text(text = "Home")
             }
         }

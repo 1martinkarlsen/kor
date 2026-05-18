@@ -9,10 +9,9 @@ import com.arkivanov.decompose.value.Value
 import dk.vixo.kor.domain.AuthRepository
 import dk.vixo.kor.domain.OSRepository
 import dk.vixo.kor.domain.usecase.LaunchTerminalAndWaitForAuthUseCase
-import dk.vixo.kor.ui.Component
-import dk.vixo.kor.ui.Config
 import dk.vixo.kor.ui.loading.LoadingComponent
 import dk.vixo.kor.ui.login.LoginComponent
+import kotlinx.serialization.Serializable
 
 class RootComponent(
     private val launchTerminalAndWaitForAuthUseCase: LaunchTerminalAndWaitForAuthUseCase,
@@ -28,7 +27,7 @@ class RootComponent(
             source = navigation,
             serializer = null,
             initialConfiguration = Config.Loading,
-            handleBackButton = true,
+            handleBackButton = false,
             childFactory = ::createChild
         )
 
@@ -51,10 +50,30 @@ class RootComponent(
             is Config.Login -> Component.Login(
                 component = LoginComponent(
                     launchTerminalAndWaitForAuthUseCase = launchTerminalAndWaitForAuthUseCase,
-                    onAuthenticationSuccess = {},
+                    onAuthenticationSuccess = {
+                        navigation.replaceAll(Config.Home)
+                    },
                     componentContext = componentContext
                 )
             )
             is Config.Home -> Component.Home
         }
+
+    sealed class Component {
+        class Loading(val component: LoadingComponent) : Component()
+        object Home : Component()
+        class Login(val component: LoginComponent) : Component()
+    }
+
+    @Serializable
+    sealed class Config {
+        @Serializable
+        object Loading : Config()
+
+        @Serializable
+        object Home : Config()
+
+        @Serializable
+        object Login : Config()
+    }
 }

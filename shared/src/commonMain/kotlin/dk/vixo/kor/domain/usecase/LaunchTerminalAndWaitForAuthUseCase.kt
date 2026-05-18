@@ -6,6 +6,7 @@ import kotlinx.coroutines.delay
 
 private const val TIMEOUT_SECONDS = 180
 private const val WAIT_FOR_LOGIN_DELAY = 5000L
+private const val MILLIS_PER_SECOND = 1000
 
 class LaunchTerminalAndWaitForAuthUseCase(
     private val osRepository: OSRepository,
@@ -18,7 +19,7 @@ class LaunchTerminalAndWaitForAuthUseCase(
     }
 
     private suspend fun waitForLogin(): Boolean {
-        val deadline = System.currentTimeMillis() + TIMEOUT_SECONDS * 1000
+        val deadline = System.currentTimeMillis() + TIMEOUT_SECONDS * MILLIS_PER_SECOND
         while (System.currentTimeMillis() < deadline) {
             if (authRepository.isAuthenticated()) {
                 return true

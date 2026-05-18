@@ -7,6 +7,7 @@ private const val PROMPT_TIMEOUT = 30L
 
 class PromptSender {
 
+    @Suppress("SwallowedException")
     fun runCommand(vararg args: String): Boolean = try {
         val processBuilder = ProcessBuilder()
         val process = processBuilder.command(*args)
@@ -23,6 +24,7 @@ class PromptSender {
         return false
     }
 
+    @Suppress("SwallowedException")
     fun sendAndGetTermination(vararg args: String): Boolean = try {
         val processBuilder = ProcessBuilder()
         val process = processBuilder.command("claude", *args)
@@ -39,6 +41,7 @@ class PromptSender {
         return false
     }
 
+    @Suppress("SwallowedException")
     fun send(prompt: String): String? = try {
         val processBuilder = ProcessBuilder()
         val process = processBuilder.command("claude", "-p", prompt, "--output-format", "json")

@@ -47,10 +47,8 @@ class LoadingComponent(
 
         val isAuthenticated = authRepository.isAuthenticated()
         if (isAuthenticated) {
-            println("Is authenticated")
             onAuthenticationSuccess()
         } else {
-            println("Is not authenticated")
             val authenticated = launchTerminalAndWaitForAuthUseCase()
             if (authenticated) {
                 onAuthenticationSuccess()

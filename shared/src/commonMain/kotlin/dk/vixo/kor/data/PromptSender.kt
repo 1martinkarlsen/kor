@@ -39,7 +39,7 @@ class PromptSender {
         return false
     }
 
-    fun send(prompt: String): String? {
+    fun send(prompt: String): String? = try {
         val processBuilder = ProcessBuilder()
         val process = processBuilder.command("claude", "-p", prompt, "--output-format", "json")
             .redirectErrorStream(false)
@@ -52,5 +52,7 @@ class PromptSender {
         }
 
         return process.inputStream.bufferedReader().readText()
+    } catch (e: IOException) {
+        null
     }
 }

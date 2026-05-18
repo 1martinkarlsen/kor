@@ -11,11 +11,7 @@ class AuthRepositoryImpl(
 ) : AuthRepository {
 
     override suspend fun isAuthenticated(): Boolean = withContext(dispatcher) {
-        val response = promptSender.send("hi")
-        if (response?.contains("Not logged in") == true) {
-            return@withContext false
-        }
-
-        return@withContext true
+        val response = promptSender.send("hi") ?: return@withContext false
+        return@withContext !response.contains("Not logged in")
     }
 }

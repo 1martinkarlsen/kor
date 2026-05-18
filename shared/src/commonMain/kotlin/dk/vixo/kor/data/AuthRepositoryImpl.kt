@@ -11,12 +11,6 @@ class AuthRepositoryImpl(
 ) : AuthRepository {
 
     override suspend fun isAuthenticated(): Boolean = withContext(dispatcher) {
-        // Version will throw error if claude code is not installed
-        val isInstalled = promptSender.sendAndGetTermination("--version")
-        if (!isInstalled) {
-            return@withContext false
-        }
-
         val response = promptSender.send("hi")
         if (response?.contains("Not logged in") == true) {
             return@withContext false

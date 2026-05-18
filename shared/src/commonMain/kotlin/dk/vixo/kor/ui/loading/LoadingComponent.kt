@@ -4,17 +4,16 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import dk.vixo.kor.domain.AuthRepository
 import dk.vixo.kor.domain.OSRepository
+import dk.vixo.kor.domain.usecase.LaunchTerminalAndWaitForAuthUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-private const val TIMEOUT_SECONDS = 180
-private const val WAIT_FOR_LOGIN_DELAY = 5000L
-
 class LoadingComponent(
+    private val launchTerminalAndWaitForAuthUseCase: LaunchTerminalAndWaitForAuthUseCase,
     private val authRepository: AuthRepository,
     private val osRepository: OSRepository,
     private val onAuthenticationSuccess: () -> Unit,
+    private val navigateToLogin: () -> Unit,
     componentContext: ComponentContext
 ) : ComponentContext by componentContext {
 
@@ -27,28 +26,22 @@ class LoadingComponent(
     }
 
     private suspend fun authenticate() {
+        val isInstalled = osRepository.isInstalled()
+        if (!isInstalled) {
+            // Claude is not installed
+            return
+        }
+
         val isAuthenticated = authRepository.isAuthenticated()
         if (isAuthenticated) {
             onAuthenticationSuccess()
         } else {
-            osRepository.launchTerminal()
-            val loggedIn = waitForLogin()
-            if (loggedIn) {
+            val authenticated = launchTerminalAndWaitForAuthUseCase()
+            if (authenticated) {
                 onAuthenticationSuccess()
+            } else {
+                navigateToLogin()
             }
         }
-    }
-
-    private suspend fun waitForLogin(): Boolean {
-        val deadline = System.currentTimeMillis() + TIMEOUT_SECONDS * 1000
-        while (System.currentTimeMillis() < deadline) {
-            if (authRepository.isAuthenticated()) {
-                return true
-            }
-
-            delay(WAIT_FOR_LOGIN_DELAY)
-        }
-
-        return false
     }
 }

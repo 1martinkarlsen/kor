@@ -6,7 +6,7 @@ import java.util.UUID
 class AgentSessionFactoryImpl : AgentSessionFactory {
 
     override fun create(name: String): AgentSession {
-        return ClaudeAgentSessionImpl(
+        return ClaudeAgentSession(
             id = UUID.randomUUID().toString(),
             name = name,
             workingDirectory = ""

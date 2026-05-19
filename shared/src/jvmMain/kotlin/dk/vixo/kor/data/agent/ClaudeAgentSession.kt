@@ -2,6 +2,7 @@ package dk.vixo.kor.data.agent
 
 import com.pty4j.PtyProcess
 import com.pty4j.PtyProcessBuilder
+import dk.vixo.kor.domain.agent.AgentSession
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -10,12 +11,13 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
+import kotlin.sequences.forEach
 
-class ClaudeAgentSessionImpl(
+class ClaudeAgentSession(
     override val id: String,
     override val name: String,
     override val workingDirectory: String,
-) : ClaudeAgentSession {
+) : AgentSession {
 
     private val scope = CoroutineScope(Dispatchers.IO)
     private var pty: PtyProcess? = null

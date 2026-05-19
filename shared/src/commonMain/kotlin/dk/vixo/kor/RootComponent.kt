@@ -6,14 +6,18 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.replaceAll
 import com.arkivanov.decompose.value.Value
+import dk.vixo.kor.data.agent.AgentManagerImpl
+import dk.vixo.kor.domain.agent.AgentSessionFactory
 import dk.vixo.kor.domain.AuthRepository
 import dk.vixo.kor.domain.OSRepository
 import dk.vixo.kor.domain.usecase.LaunchTerminalAndWaitForAuthUseCase
+import dk.vixo.kor.ui.home.HomeComponent
 import dk.vixo.kor.ui.loading.LoadingComponent
 import dk.vixo.kor.ui.login.LoginComponent
 import kotlinx.serialization.Serializable
 
 class RootComponent(
+    private val agentSessionFactory: AgentSessionFactory,
     private val launchTerminalAndWaitForAuthUseCase: LaunchTerminalAndWaitForAuthUseCase,
     private val authRepository: AuthRepository,
     private val osRepository: OSRepository,
@@ -56,12 +60,17 @@ class RootComponent(
                     componentContext = componentContext
                 )
             )
-            is Config.Home -> Component.Home
+            is Config.Home -> Component.Home(
+                component = HomeComponent(
+                    agentManager = AgentManagerImpl(agentFactory = agentSessionFactory),
+                    componentContext = componentContext
+                )
+            )
         }
 
     sealed class Component {
         class Loading(val component: LoadingComponent) : Component()
-        object Home : Component()
+        class Home(val component: HomeComponent) : Component()
         class Login(val component: LoginComponent) : Component()
     }
 

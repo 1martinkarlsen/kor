@@ -10,7 +10,7 @@ class AgentManagerImpl(
     private val sessions: MutableList<AgentSession> = mutableListOf()
 
     override fun new(name: String) {
-        val agent = agentFactory.create()
+        val agent = agentFactory.create(name = name)
         sessions.add(agent)
 
         agent.start()

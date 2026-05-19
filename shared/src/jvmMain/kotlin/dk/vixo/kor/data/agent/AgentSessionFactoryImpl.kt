@@ -5,9 +5,10 @@ import java.util.UUID
 
 class AgentSessionFactoryImpl : AgentSessionFactory {
 
-    override fun create(): AgentSession {
+    override fun create(name: String): AgentSession {
         return ClaudeAgentSessionImpl(
             id = UUID.randomUUID().toString(),
+            name = name,
             workingDirectory = ""
         )
     }

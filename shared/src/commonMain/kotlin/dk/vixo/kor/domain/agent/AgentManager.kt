@@ -2,5 +2,5 @@ package dk.vixo.kor.domain.agent
 
 interface AgentManager {
 
-    fun new()
+    fun new(name: String)
 }

@@ -9,6 +9,6 @@ class HomeComponent(
 ) : ComponentContext by componentContext {
 
     fun newAgent(name: String) {
-        agentManager.new()
+        agentManager.new(name = name)
     }
 }

@@ -10,6 +10,7 @@ import com.arkivanov.essenty.lifecycle.resume
 import dk.vixo.kor.data.AuthRepositoryImpl
 import dk.vixo.kor.data.OSRepositoryImpl
 import dk.vixo.kor.data.PromptSender
+import dk.vixo.kor.data.agent.AgentSessionFactoryImpl
 import dk.vixo.kor.domain.usecase.LaunchTerminalAndWaitForAuthUseCase
 import dk.vixo.kor.ui.App
 
@@ -23,6 +24,7 @@ fun main() {
         val lifecycle = remember { LifecycleRegistry() }
         val root = remember {
             RootComponent(
+                agentSessionFactory = AgentSessionFactoryImpl(),
                 launchTerminalAndWaitForAuthUseCase = LaunchTerminalAndWaitForAuthUseCase(
                     osRepository = osRepo,
                     authRepository = authRepo

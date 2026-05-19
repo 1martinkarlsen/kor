@@ -21,6 +21,9 @@ kotlin {
             implementation(libs.decompose.compose)
             implementation(libs.decompose.coroutines)
         }
+        jvmMain.dependencies {
+            implementation(libs.pty4j)
+        }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }

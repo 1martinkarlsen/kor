@@ -9,8 +9,7 @@ class AgentSessionFactoryImpl : AgentSessionFactory {
     override fun create(name: String): AgentSession {
         return ClaudeAgentSession(
             id = UUID.randomUUID().toString(),
-            name = name,
-            workingDirectory = ""
+            name = name
         )
     }
 }

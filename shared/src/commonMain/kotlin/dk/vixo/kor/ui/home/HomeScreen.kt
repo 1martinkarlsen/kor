@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
@@ -21,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 
 @Composable
 fun HomeScreen(component: HomeComponent) {
@@ -30,8 +28,9 @@ fun HomeScreen(component: HomeComponent) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-    ) {
+    ) { paddingValues ->
         Button(
+            modifier = Modifier.padding(paddingValues),
             onClick = {
                 showDialog = true
             },

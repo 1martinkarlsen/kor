@@ -16,4 +16,9 @@ class AgentManagerImpl(
 
         agent.start()
     }
+
+    override fun stopAll() {
+        sessions.forEach { it.stop() }
+        sessions.clear()
+    }
 }

@@ -15,8 +15,7 @@ import kotlin.sequences.forEach
 
 class ClaudeAgentSession(
     override val id: String,
-    override val name: String,
-    override val workingDirectory: String,
+    override val name: String
 ) : AgentSession {
 
     private val scope = CoroutineScope(Dispatchers.IO)
@@ -30,7 +29,6 @@ class ClaudeAgentSession(
             val process = PtyProcessBuilder()
                 .setCommand(arrayOf("/bin/zsh", "-i", "-c", "claude"))
                 .setEnvironment(System.getenv() + mapOf("TERM" to "xterm-256color"))
-                .setDirectory(workingDirectory)
                 .start()
             pty = process
 

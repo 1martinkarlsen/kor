@@ -7,7 +7,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.replaceAll
 import com.arkivanov.decompose.value.Value
 import dk.vixo.kor.data.agent.AgentManagerImpl
-import dk.vixo.kor.data.agent.AgentSessionFactory
+import dk.vixo.kor.domain.agent.AgentSessionFactory
 import dk.vixo.kor.domain.AuthRepository
 import dk.vixo.kor.domain.OSRepository
 import dk.vixo.kor.domain.usecase.LaunchTerminalAndWaitForAuthUseCase

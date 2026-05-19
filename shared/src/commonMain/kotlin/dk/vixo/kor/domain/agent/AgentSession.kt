@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.Flow
 interface AgentSession {
     val id: String
     val name: String
-    val workingDirectory: String
     val output: Flow<String>
     fun start()
     fun stop()

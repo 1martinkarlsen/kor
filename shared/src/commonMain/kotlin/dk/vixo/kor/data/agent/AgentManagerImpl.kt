@@ -2,6 +2,7 @@ package dk.vixo.kor.data.agent
 
 import dk.vixo.kor.domain.agent.AgentManager
 import dk.vixo.kor.domain.agent.AgentSession
+import dk.vixo.kor.domain.agent.AgentSessionFactory
 
 class AgentManagerImpl(
     private val agentFactory: AgentSessionFactory

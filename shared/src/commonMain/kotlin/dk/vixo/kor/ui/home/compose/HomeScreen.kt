@@ -30,7 +30,7 @@ import dk.vixo.kor.ui.home.compose.components.AgentItem
 
 @OptIn(ExperimentalFlexBoxApi::class)
 @Composable
-fun HomeScreen(component: HomeComponent) {
+internal fun HomeScreen(component: HomeComponent) {
     var showDialog by remember { mutableStateOf(false) }
 
     val agents by component.agents.collectAsState(initial = emptyList())

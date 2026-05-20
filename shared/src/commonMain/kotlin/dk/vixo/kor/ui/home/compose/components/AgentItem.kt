@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import dk.vixo.kor.domain.agent.AgentSession
 
 @Composable
-fun AgentItem(
+internal fun AgentItem(
     agent: AgentSession,
     onClick: () -> Unit
 ) {

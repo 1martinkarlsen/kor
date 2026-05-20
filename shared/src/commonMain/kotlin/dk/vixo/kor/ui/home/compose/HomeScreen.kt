@@ -58,7 +58,10 @@ fun HomeScreen(component: HomeComponent) {
                 },
                 content = {
                     agents.forEach { agent ->
-                        AgentItem(agent)
+                        AgentItem(
+                            agent = agent,
+                            onClick = {}
+                        )
                     }
                 }
             )

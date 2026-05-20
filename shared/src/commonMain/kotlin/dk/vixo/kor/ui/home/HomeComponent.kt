@@ -9,6 +9,8 @@ class HomeComponent(
     componentContext: ComponentContext
 ) : ComponentContext by componentContext {
 
+    val agents = agentManager.sessions
+
     init {
         lifecycle.doOnDestroy {
             agentManager.stopAll()

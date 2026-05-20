@@ -5,7 +5,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalFlexBoxApi
 import androidx.compose.foundation.layout.FlexBox
-import androidx.compose.foundation.layout.FlexBoxConfig
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,7 +32,7 @@ import dk.vixo.kor.ui.home.compose.components.AgentItem
 internal fun HomeScreen(component: HomeComponent) {
     var showDialog by remember { mutableStateOf(false) }
 
-    val agents by component.agents.collectAsState(initial = emptyList())
+    val agents by component.agents.collectAsState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -105,6 +104,7 @@ private fun StartAgentDialog(
                 )
 
                 Button(
+                    enabled = newAgentName.text.isNotBlank(),
                     onClick = {
                         onStartAgent(newAgentName.text.toString())
                         newAgentName.setTextAndPlaceCursorAtEnd("")

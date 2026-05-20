@@ -3,23 +3,26 @@ package dk.vixo.kor.data.agent
 import dk.vixo.kor.domain.agent.AgentManager
 import dk.vixo.kor.domain.agent.AgentSession
 import dk.vixo.kor.domain.agent.AgentSessionFactory
-import java.util.Collections
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class AgentManagerImpl(
     private val agentFactory: AgentSessionFactory
 ) : AgentManager {
 
-    private val sessions: MutableList<AgentSession> = Collections.synchronizedList(mutableListOf())
+    private val _sessions = MutableStateFlow<List<AgentSession>>(emptyList())
+    override val sessions: StateFlow<List<AgentSession>> = _sessions.asStateFlow()
 
     override fun new(name: String) {
         val agent = agentFactory.create(name = name)
-        sessions.add(agent)
-
+        _sessions.update { it + agent }
         agent.start()
     }
 
     override fun stopAll() {
-        sessions.forEach { it.stop() }
-        sessions.clear()
+        _sessions.value.forEach { it.stop() }
+        _sessions.value = emptyList()
     }
 }

@@ -9,7 +9,7 @@ import androidx.compose.runtime.getValue
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 
 @Composable
-fun LoadingScreen(component: LoadingComponent) {
+internal fun LoadingScreen(component: LoadingComponent) {
     val state by component.state.subscribeAsState()
 
     when (state) {

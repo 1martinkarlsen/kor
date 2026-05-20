@@ -32,7 +32,6 @@ import dk.vixo.kor.ui.home.compose.components.AgentItem
 @Composable
 fun HomeScreen(component: HomeComponent) {
     var showDialog by remember { mutableStateOf(false) }
-    val newAgentName = rememberTextFieldState()
 
     val agents by component.agents.collectAsState(initial = emptyList())
 
@@ -69,40 +68,53 @@ fun HomeScreen(component: HomeComponent) {
     }
 
     if (showDialog) {
-        Dialog(
-            onDismissRequest = {
-                showDialog = false
+        StartAgentDialog(
+            onStartAgent = { agentName ->
+                component.newAgent(agentName)
             },
-            content = {
-                Column(
-                    modifier = Modifier
-                        .background(
-                            color = Color.White,
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                        .border(
-                            width = 1.dp,
-                            color = Color.Black,
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                        .padding(16.dp)
-                ) {
-                    TextField(
-                        state = newAgentName
-                    )
-
-                    Button(
-                        onClick = {
-                            component.newAgent(newAgentName.text.toString())
-                            newAgentName.setTextAndPlaceCursorAtEnd("")
-                            showDialog = false
-                        },
-                        content = {
-                            Text("Start")
-                        }
-                    )
-                }
-            }
+            onDismiss = { showDialog = false },
         )
     }
+}
+
+@Composable
+private fun StartAgentDialog(
+    onStartAgent: (String) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val newAgentName = rememberTextFieldState()
+
+    Dialog(
+        onDismissRequest = onDismiss,
+        content = {
+            Column(
+                modifier = Modifier
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = Color.Black,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .padding(16.dp)
+            ) {
+                TextField(
+                    state = newAgentName
+                )
+
+                Button(
+                    onClick = {
+                        onStartAgent(newAgentName.text.toString())
+                        newAgentName.setTextAndPlaceCursorAtEnd("")
+                        onDismiss()
+                    },
+                    content = {
+                        Text("Start")
+                    }
+                )
+            }
+        }
+    )
 }

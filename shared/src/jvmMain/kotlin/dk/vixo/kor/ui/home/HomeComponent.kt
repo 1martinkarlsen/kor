@@ -44,6 +44,11 @@ class HomeComponent(
                 val sessionIds = sessions.map { it.id }.toSet()
 
                 current.filter { it.key !in sessionIds }.values.forEach { it.close() }
+                _terminals.update { it.filterKeys { key -> key in sessionIds } }
+
+                if (_selectedAgent.value?.id !in sessionIds) {
+                    _selectedAgent.value = null
+                }
 
                 sessions
                     .filter { it.id !in current }

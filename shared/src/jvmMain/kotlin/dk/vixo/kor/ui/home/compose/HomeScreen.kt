@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
@@ -74,7 +75,7 @@ internal fun HomeScreen(component: HomeComponent) {
                     onClose = { component.clearSelection() },
                     modifier = Modifier
                         .fillMaxHeight()
-                        .width(520.dp)
+                        .widthIn(min = 520.dp)
                         .align(Alignment.CenterEnd)
                 )
             }

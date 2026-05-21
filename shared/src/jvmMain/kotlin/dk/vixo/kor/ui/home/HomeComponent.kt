@@ -1,6 +1,7 @@
 package dk.vixo.kor.ui.home
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.jediterm.terminal.ui.JediTermWidget
 import com.jediterm.terminal.ui.settings.DefaultSettingsProvider
@@ -11,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +27,7 @@ class HomeComponent(
     componentContext: ComponentContext
 ) : ComponentContext by componentContext {
 
-    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private val scope = coroutineScope(Dispatchers.Main)
 
     val agents: StateFlow<List<AgentSession>> = agentManager.sessions
 
@@ -58,6 +60,7 @@ class HomeComponent(
 
         lifecycle.doOnDestroy {
             _terminals.value.values.forEach { it.close() }
+            _terminals.value = emptyMap()
             agentManager.stopAll()
             scope.cancel()
         }

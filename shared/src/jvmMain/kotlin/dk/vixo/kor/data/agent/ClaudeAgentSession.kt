@@ -5,8 +5,6 @@ import com.jediterm.terminal.TtyConnector
 import com.pty4j.PtyProcess
 import com.pty4j.PtyProcessBuilder
 import dk.vixo.kor.domain.agent.JvmAgentSession
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import java.io.IOException
 
 class ClaudeAgentSession(

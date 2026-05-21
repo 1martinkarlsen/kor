@@ -1,51 +1,40 @@
 package dk.vixo.kor.data.agent
 
+import com.jediterm.pty.PtyProcessTtyConnector
+import com.jediterm.terminal.TtyConnector
 import com.pty4j.PtyProcess
 import com.pty4j.PtyProcessBuilder
 import dk.vixo.kor.domain.agent.AgentSession
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
+import dk.vixo.kor.domain.agent.PtyConnectable
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.emptyFlow
 import java.io.IOException
 
 class ClaudeAgentSession(
     override val id: String,
     override val name: String
-) : AgentSession {
+) : AgentSession, PtyConnectable {
 
-    private val scope = CoroutineScope(Dispatchers.IO)
     private var pty: PtyProcess? = null
-
-    private val _output = MutableSharedFlow<String>()
-    override val output: Flow<String> = _output.asSharedFlow()
+    override val output: Flow<String> = emptyFlow()
 
     override fun start() {
         try {
-            val process = PtyProcessBuilder()
+            pty = PtyProcessBuilder()
                 .setCommand(arrayOf("/bin/zsh", "-i", "-c", "claude"))
                 .setEnvironment(System.getenv() + mapOf("TERM" to "xterm-256color"))
                 .start()
-            pty = process
-
-            scope.launch {
-                process.inputStream.bufferedReader().useLines { lines ->
-                    lines.forEach { line ->
-                        _output.emit(line)
-                    }
-                }
-            }
         } catch (io: IOException) {
             println("PTY failed to start: ${io.message}")
         }
     }
 
+    override fun createTtyConnector(): TtyConnector {
+        return PtyProcessTtyConnector(pty ?: error("Agent not started"), Charsets.UTF_8)
+    }
+
     override fun stop() {
         pty?.destroy()
         pty = null
-        scope.cancel()
     }
 }

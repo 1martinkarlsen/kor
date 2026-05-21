@@ -23,6 +23,8 @@ kotlin {
         }
         jvmMain.dependencies {
             implementation(libs.pty4j)
+            implementation(libs.jediterm.pty)
+            implementation(libs.jediterm.ui)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

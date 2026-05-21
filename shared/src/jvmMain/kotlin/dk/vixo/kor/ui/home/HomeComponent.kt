@@ -65,7 +65,6 @@ class HomeComponent(
             _terminals.value.values.forEach { it.close() }
             _terminals.value = emptyMap()
             agentManager.stopAll()
-            scope.cancel()
         }
     }
 

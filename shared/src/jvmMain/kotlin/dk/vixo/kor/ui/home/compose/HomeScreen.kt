@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -26,7 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import dk.vixo.kor.ui.home.HomeComponent
@@ -101,8 +101,8 @@ private fun StartAgentDialog(
         content = {
             Column(
                 modifier = Modifier
-                    .background(color = Color.White, shape = RoundedCornerShape(8.dp))
-                    .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(8.dp))
+                    .background(color = MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(8.dp))
+                    .border(width = 1.dp, color = MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(8.dp))
                     .padding(16.dp)
             ) {
                 TextField(state = newAgentName)

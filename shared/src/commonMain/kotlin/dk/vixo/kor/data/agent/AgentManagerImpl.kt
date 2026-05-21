@@ -17,8 +17,8 @@ class AgentManagerImpl(
 
     override fun new(name: String) {
         val agent = agentFactory.create(name = name)
-        _sessions.update { it + agent }
         agent.start()
+        _sessions.update { it + agent }
     }
 
     override fun stopAll() {

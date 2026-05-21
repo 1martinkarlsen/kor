@@ -47,12 +47,6 @@ internal fun AgentItem(
                     modifier = Modifier.weight(1f)
                 )
             }
-
-            Text(
-                text = "Active",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
         }
     }
 }

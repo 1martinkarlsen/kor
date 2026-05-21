@@ -9,7 +9,6 @@ import dk.vixo.kor.domain.agent.AgentManager
 import dk.vixo.kor.domain.agent.AgentSession
 import dk.vixo.kor.domain.agent.JvmAgentSession
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

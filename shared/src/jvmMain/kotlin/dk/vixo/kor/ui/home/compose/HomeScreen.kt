@@ -75,7 +75,7 @@ internal fun HomeScreen(component: HomeComponent) {
                     onClose = { component.clearSelection() },
                     modifier = Modifier
                         .fillMaxHeight()
-                        .widthIn(min = 520.dp)
+                        .width(width = 520.dp)
                         .align(Alignment.CenterEnd)
                 )
             }

@@ -7,12 +7,9 @@ import com.jediterm.terminal.ui.JediTermWidget
 import com.jediterm.terminal.ui.settings.DefaultSettingsProvider
 import dk.vixo.kor.domain.agent.AgentManager
 import dk.vixo.kor.domain.agent.AgentSession
-import dk.vixo.kor.domain.agent.PtyConnectable
-import kotlinx.coroutines.CoroutineScope
+import dk.vixo.kor.domain.agent.JvmAgentSession
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -49,10 +46,11 @@ class HomeComponent(
                 current.filter { it.key !in sessionIds }.values.forEach { it.close() }
 
                 sessions
-                    .filter { it.id !in current && it is PtyConnectable }
+                    .filter { it.id !in current }
+                    .filterIsInstance<JvmAgentSession>()
                     .forEach { session ->
                         val widget = JediTermWidget(DefaultSettingsProvider())
-                        widget.createTerminalSession((session as PtyConnectable).createTtyConnector()).start()
+                        widget.createTerminalSession(session.createTtyConnector()).start()
                         _terminals.update { it + (session.id to widget) }
                     }
             }

@@ -7,19 +7,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalFlexBoxApi
 import androidx.compose.foundation.layout.FlexBox
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material3.Button
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -73,43 +68,15 @@ internal fun HomeScreen(component: HomeComponent) {
             }
 
             if (selectedAgent != null) {
-                Box(
+                AgentTerminalPanel(
+                    agent = selectedAgent!!,
+                    widget = selectedTerminal,
+                    onClose = { component.clearSelection() },
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(520.dp)
                         .align(Alignment.CenterEnd)
-                        .background(MaterialTheme.colorScheme.surface)
-                        .border(
-                            width = 1.dp,
-                            color = MaterialTheme.colorScheme.outlineVariant,
-                            shape = RoundedCornerShape(topStart = 8.dp, bottomStart = 8.dp)
-                        )
-                ) {
-                    Column(modifier = Modifier.fillMaxSize()) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = selectedAgent!!.name,
-                                style = MaterialTheme.typography.titleSmall
-                            )
-                            TextButton(onClick = { component.clearSelection() }) {
-                                Text("✕")
-                            }
-                        }
-
-                        HorizontalDivider()
-
-                        AgentTerminalPanel(
-                            widget = selectedTerminal,
-                            modifier = Modifier.weight(1f).fillMaxWidth()
-                        )
-                    }
-                }
+                )
             }
         }
     }

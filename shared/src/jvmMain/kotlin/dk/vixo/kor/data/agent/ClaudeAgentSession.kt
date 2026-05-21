@@ -16,7 +16,6 @@ class ClaudeAgentSession(
 ) : AgentSession, PtyConnectable {
 
     private var pty: PtyProcess? = null
-    override val output: Flow<String> = emptyFlow()
 
     override fun start() {
         try {
